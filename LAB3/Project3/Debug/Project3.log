@@ -1,0 +1,5 @@
+﻿  Source.cpp
+\\mac\dropbox\cs\cs66\lab3\project3\convert_b_h_d.h(26): warning C4018: '<': signed/unsigned mismatch
+\\mac\dropbox\cs\cs66\lab3\project3\convert_b_h_d.h(151): warning C4018: '<': signed/unsigned mismatch
+\\mac\dropbox\cs\cs66\lab3\project3\convert_b_h_d.h(182): warning C4018: '<': signed/unsigned mismatch
+  Project3.vcxproj -> \\Mac\Dropbox\CS\CS66\LAB3\Debug\Project3.exe

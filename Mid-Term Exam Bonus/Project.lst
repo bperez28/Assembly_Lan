@@ -1,0 +1,118 @@
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    04/27/19 16:50:40
+CopyStr.asm						     Page 1 - 1
+
+
+				; Copying a String (CopyStr.asm)
+
+				; This program copies a string.
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess PROTO, dwExitCode:dword
+
+				comment @ 
+				this is part 1
+				.data
+
+				bigEndian BYTE 12h, 34h, 56h, 78h
+				littleEndian DWORD SIZEOF bigEndian DUP(0),0
+
+				.code
+				main proc
+
+					mov esi,0		;i
+					mov ecx,sizeof  bigEndian	;i<ecx
+					mov ebx,SIZEOF  bigEndian
+					DEC EBX
+				L1:	
+					mov	al,bigEndian[esi]
+					mov  byte ptr littleEndian[ebx], al
+					INC esi
+					DEC ebx
+					loop L1
+
+
+					invoke ExitProcess,0
+				main endp
+				end main
+
+				.data
+				var BYTE 1
+				var2 WORD 2
+				.code 
+				main proc
+				mov bx,var2
+				.data
+				var3 DWORD 3
+				.code
+				mov eax,var3
+				main endp
+				end main
+
+
+					
+					
+				@
+ 00000000			.data
+ 00000000  00000003 [		myDWords DWORD	3 DUP(?),4000h
+	    00000000
+	   ] 00004000
+ 00000010 31 32 33 34 35	myString	BYTE	"12345",0
+	   00
+ 00000016 20 30 40 00		myBytes		BYTE	20h,30h,40h,0
+
+ 00000000			.code
+ 00000000			main proc
+
+ 00000000  66| A1		mov ax, word ptr myString
+	   00000010 R
+
+					invoke ExitProcess,0
+ 00000006  6A 00	   *	    push   +000000000h
+ 00000008  E8 00000000 E   *	    call   ExitProcess
+ 0000000D			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    04/27/19 16:50:40
+CopyStr.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000001A DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000000D DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000000D Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+myBytes  . . . . . . . . . . . .	Byte	 00000016 _DATA	
+myDWords . . . . . . . . . . . .	DWord	 00000000 _DATA	
+myString . . . . . . . . . . . .	Byte	 00000010 _DATA	
+
+	   0 Warnings
+	   0 Errors

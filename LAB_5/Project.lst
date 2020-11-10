@@ -1,0 +1,130 @@
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/02/19 13:03:46
+AddTwo.asm						     Page 1 - 1
+
+
+				; AddTwo.asm - adds two 32-bit integers.
+				; Chapter 3 example
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+
+ 00000000			.data
+				;myByte BYTE 0FFh, 0
+ 00000000 32			 Xval BYTE 50
+ 00000001 000A			 Yval WORD 10
+ 00000003 00000014		 Zval DWORD 20
+ 00000007 00000000		 Rval Dword 0
+ 00000000			.code
+ 00000000			main proc
+				;------------part1---------
+				comment @
+				 mov al,myByte  
+				 mov ah,[myByte+1]  
+				  dec ah  
+				 inc al  
+				dec ax	
+				@
+				;------------part2-----------
+				comment @
+				Rval = Xval - (-Yval + Zval)
+				mov eax,0
+				mov ebx,0
+				mov eax,Zval
+				mov ebx, dword ptr [Yval]
+				sub eax,ebx
+				mov ebx,0
+				mov ebx, dword ptr [Xval]
+				sub ebx,eax
+				mov Rval,ebx
+				@
+				;---------------part 3---------
+				comment @
+				mov ax,00FFh
+				add ax,1  
+				sub ax,1  
+				add al,1  
+				mov bh,6Ch
+				add bh,95h  
+				mov al,2
+				sub al,3
+				@
+				;---------------part4------------
+				comment @
+				mov al,-128
+				neg al  
+				mov ax,8000h
+				add ax,2  
+				mov ax,0
+				sub ax,2  
+				mov al,-5
+				sub al,+125
+				@
+				;---------------part5------------
+				; CY, Z, Of flags 
+ 00000000  B0 FF		mov al,0ffh
+ 00000002  04 01		add al,1	;CY
+ 00000004  B0 00		mov al,0
+ 00000006  FE C0		inc al
+ 00000008  2C 01		sub al,1	;Z
+ 0000000A  B0 7F		mov al,127
+ 0000000C  04 01		add al,1	;of
+
+
+				;overflow flag
+ 0000000E  B0 00		mov al,0
+ 00000010  04 01		add al,1
+				;zero flag 
+ 00000012  66| B9 0001		mov cx,1
+ 00000016  66| 83 E9 01		sub cx,1
+
+					invoke ExitProcess,0
+ 0000001A  6A 00	   *	    push   +000000000h
+ 0000001C  E8 00000000 E   *	    call   ExitProcess
+ 00000021			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.16.27027.1	    05/02/19 13:03:46
+AddTwo.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000000B DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000021 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000021 Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+Rval . . . . . . . . . . . . . .	DWord	 00000007 _DATA	
+Xval . . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+Yval . . . . . . . . . . . . . .	Word	 00000001 _DATA	
+Zval . . . . . . . . . . . . . .	DWord	 00000003 _DATA	
+
+	   0 Warnings
+	   0 Errors
